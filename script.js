@@ -5,6 +5,9 @@ const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
 const inputEl = document.getElementById("input");
 const searchBtn = document.querySelector(".search button");
 
+const weatherIcon = document.getElementById("weather-icon");
+
+
 const cityEl = document.getElementById("city");
 const dateEl = document.getElementById("date");
 const tempEl = document.getElementById("temp");
@@ -54,10 +57,32 @@ async function getWeather(city) {
       precipitationEl.textContent = "0 mm";
     }
 
+    // 🌤 Weather icon mapping
+    const weather = data.weather[0].main.toLowerCase();
+
+    if (weather.includes("cloud")) {
+      weatherIcon.src = "images/clouds.png";
+    } else if (weather.includes("clear")) {
+      weatherIcon.src = "images/clear.png";
+    } else if (weather.includes("rain")) {
+      weatherIcon.src = "images/rain.png";
+    } else if (weather.includes("drizzle")) {
+      weatherIcon.src = "images/drizzle.png";
+    } else if (weather.includes("snow")) {
+      weatherIcon.src = "images/snow.png";
+    } else if (weather.includes("thunderstorm")) {
+      weatherIcon.src = "images/thunderstorm.png";
+    } else if (weather.includes("mist") || weather.includes("fog") || weather.includes("haze")) {
+      weatherIcon.src = "images/mist.png";
+    } else {
+      weatherIcon.src = "images/clear.png"; // fallback
+    }
+
   } catch (error) {
     console.error("Error fetching weather:", error);
   }
 }
+
 
 // Event listener for search button
 searchBtn.addEventListener("click", (e) => {
